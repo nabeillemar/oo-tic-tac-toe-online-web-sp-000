@@ -72,8 +72,44 @@ def turn
 end
 
 
-  def current_player
-     board.turn_count.odd? ? player_2 : player_1
+  def won?
+    a = WIN_COMBINATIONS.find{
+      |combo|
+      @board[combo[0]] == "X" && @board[combo[1]] == "X" && @board[combo[2]] == "X"
+    }
+    b = WIN_COMBINATIONS.find{
+      |combo|
+      @board[combo[0]] == "O" && @board[combo[1]] == "O" && @board[combo[2]] == "O"
+    }
+    return a || b
+  end
+  
+
+
+  
+  def full?
+    !@board.any?{|x| x == "" || x == " "}
+  end
+  
+
+  def draw?
+    !won? && full?
+  end
+  
+  
+  
+  def over?
+    won? || draw?
+  end
+
+
+
+  def winner
+    if won?
+      @board[won?[0]] == "X" ? "X" : "O"
+    else
+      nil
+    end
   end
   
   
